@@ -132,6 +132,9 @@ module.exports = {
       data.inPlace ? "" : data.destDirName,
       "package.json"
     );
+    console.log(packageJsonFile)
+    console.log(path)
+                
     const packageJson = JSON.parse(fs.readFileSync(packageJsonFile));
     packageJson.devDependencies = sortObject(packageJson.devDependencies);
     packageJson.dependencies = sortObject(packageJson.dependencies);
