@@ -26,115 +26,49 @@ module.exports = {
       "required": true,
       "message": "Project name"
     },
-    "description": {
-      "type": "string",
-      "required": false,
-      "message": "Project description",
-      "default": "A Vue.js project"
-    },
     "author": {
       "type": "string",
       "message": "Author"
     },
-    "build": {
+    "question": {
+      "type": "confirm",
+      "message": "油条是群艹吗?"
+    },
+    "css": {
+      "type": "confirm",
+      "message": "是否使用css预处理器?"
+    },
+    "preCSS": {
+      "when": "css",
       "type": "list",
-      "message": "Vue build",
+      "message": "选择你喜欢的",
       "choices": [
         {
-          "name": "Runtime + Compiler: recommended for most users",
-          "value": "standalone",
-          "short": "standalone"
+          "name": "sass",
+          "value": "sass",
+          "short": "sass"
         },
         {
-          "name": "Runtime-only: about 6KB lighter min+gzip, but templates (or any Vue-specific HTML) are ONLY allowed in .vue files - render functions are required elsewhere",
-          "value": "runtime",
-          "short": "runtime"
+          "name": "less",
+          "value": "less",
+          "short": "less"
+        },
+        {
+          "name": "stylus",
+          "value": "stylus",
+          "short": "stylus"
         }
       ]
     },
-    "router": {
-      "type": "confirm",
-      "message": "Install vue-router?"
-    },
-    "lint": {
-      "type": "confirm",
-      "message": "Use ESLint to lint your code?"
-    },
-    "lintConfig": {
-      "when": "lint",
-      "type": "list",
-      "message": "Pick an ESLint preset",
-      "choices": [
-        {
-          "name": "Standard (https://github.com/standard/standard)",
-          "value": "standard",
-          "short": "Standard"
-        },
-        {
-          "name": "Airbnb (https://github.com/airbnb/javascript)",
-          "value": "airbnb",
-          "short": "Airbnb"
-        },
-        {
-          "name": "none (configure it yourself)",
-          "value": "none",
-          "short": "none"
-        }
-      ]
-    },
-    "unit": {
-      "type": "confirm",
-      "message": "Set up unit tests"
-    },
-    "runner": {
-      "when": "unit",
-      "type": "list",
-      "message": "Pick a test runner",
-      "choices": [
-        {
-          "name": "Jest",
-          "value": "jest",
-          "short": "jest"
-        },
-        {
-          "name": "Karma and Mocha",
-          "value": "karma",
-          "short": "karma"
-        },
-        {
-          "name": "none (configure it yourself)",
-          "value": "noTest",
-          "short": "noTest"
-        }
-      ]
-    },
-    "e2e": {
-      "type": "confirm",
-      "message": "Setup e2e tests with Nightwatch?"
-    }
   },
   "filters": {
-    ".eslintrc.js": "lint",
-    ".eslintignore": "lint",
-    "config/test.env.js": "unit || e2e",
-    "build/webpack.test.conf.js": "e2e || (unit && runner === 'karma')",
-    "test/unit/**/*": "unit",
-    "test/unit/index.js": "unit && runner === 'karma'",
-    "test/unit/jest.conf.js": "unit && runner === 'jest'",
-    "test/unit/karma.conf.js": "unit && runner === 'karma'",
-    "test/unit/specs/index.js": "unit && runner === 'karma'",
-    "test/unit/setup.js": "unit && runner === 'jest'",
-    "test/e2e/**/*": "e2e",
-    "src/router/**/*": "router"
+    "src/readme.txt": "question"
   },
   "complete": function (data) {
     const packageJsonFile = path.join(
       data.inPlace ? "" : data.destDirName,
       "package.json"
     );
-    console.log(packageJsonFile)
-    console.log(path)
-                
     const packageJson = JSON.parse(fs.readFileSync(packageJsonFile));
     packageJson.devDependencies = sortObject(packageJson.devDependencies);
     packageJson.dependencies = sortObject(packageJson.dependencies);
